@@ -8,8 +8,8 @@ package steele;
  * 
  */
 public class Node {
-	int data; // data of the node
-	Node next; // pointer to the next node
+	public int data; // data of the node
+	public Node next; // pointer to the next node
 	
 	
 	/**
