@@ -76,6 +76,8 @@ public class FileReaderWindow {
 					try {
 						Scanner fileReader = new Scanner(selectedFile);
 						sum = 0;
+						count = 0;
+						// create linked list from file
 						head = new Node(Integer.parseInt(fileReader.nextLine()));
 						Node trav = head;
 						while(fileReader.hasNextLine()) {
