@@ -127,7 +127,7 @@ public class FileReaderWindow {
 			varianceSum += Math.pow(trav.data - mean, 2);
 			trav = trav.next;
 		}
-		return Math.sqrt(sum / this.count);
+		return Math.sqrt(varianceSum / this.count);
 	}
 
 	/**
