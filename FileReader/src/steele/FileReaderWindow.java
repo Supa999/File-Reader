@@ -31,7 +31,7 @@ public class FileReaderWindow {
 	private JLabel lblNewLabel; // label for mean
 	private JTextArea meanTextArea; // text area for mean
 	private JTextArea stdDevTextArea; // text area for standard deviation
-	private int sum; // sum of the numbers
+	private double sum; // sum of the numbers
 	private int count; // count of the numbers
 
 	/**
@@ -78,18 +78,21 @@ public class FileReaderWindow {
 						sum = 0;
 						count = 0;
 						// create linked list from file
-						head = new Node(Integer.parseInt(fileReader.nextLine()));
+						int num = Integer.parseInt(fileReader.nextLine());
+						head = new Node(num);
+						sum += num;
+						count++;
 						Node trav = head;
 						while(fileReader.hasNextLine()) {
-							int num = Integer.parseInt(fileReader.nextLine());
+							num = Integer.parseInt(fileReader.nextLine());
 							sum += num;
 							count++;
-							trav.next = new Node(Integer.parseInt(fileReader.nextLine()));
+							trav.next = new Node(num);
 							trav = trav.next;
 						}
-						int mean = findMean(head);
+						double mean = findMean(head);
 						double stdDev = findStandardDeviation(head, mean);
-						meanTextArea.setText(Integer.toString(mean));
+						meanTextArea.setText(Double.toString(mean));
 						stdDevTextArea.setText(String.format("%.02f", stdDev));
 						
 					} catch(FileNotFoundException ex) {
@@ -105,7 +108,7 @@ public class FileReaderWindow {
 	 * @param head head of the linked list
 	 * @return mean of the linked list
 	 */
-	private int findMean(Node head) {
+	private double findMean(Node head) {
 		if(head == null) return 0;
 		return this.sum / this.count;
 	}
@@ -116,11 +119,12 @@ public class FileReaderWindow {
 	 * @param mean mean of the linked list
 	 * @return standard deviation of the linked list
 	 */
-	private double findStandardDeviation(Node head, int mean) {
+	private double findStandardDeviation(Node head, double mean) {
 		if(head == null) return 0;
 		Node trav = head;
+		double varianceSum = 0;
 		while(trav != null) {
-			sum += Math.pow(trav.data - mean, 2);
+			varianceSum += Math.pow(trav.data - mean, 2);
 			trav = trav.next;
 		}
 		return Math.sqrt(sum / this.count);
