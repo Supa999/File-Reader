@@ -31,6 +31,8 @@ public class FileReaderWindow {
 	private JLabel lblNewLabel; // label for mean
 	private JTextArea meanTextArea; // text area for mean
 	private JTextArea stdDevTextArea; // text area for standard deviation
+	private int sum; // sum of the numbers
+	private int count; // count of the numbers
 
 	/**
 	 * Launch the application.
@@ -73,9 +75,13 @@ public class FileReaderWindow {
 					File selectedFile = chooser.getSelectedFile();
 					try {
 						Scanner fileReader = new Scanner(selectedFile);
+						sum = 0;
 						head = new Node(Integer.parseInt(fileReader.nextLine()));
 						Node trav = head;
 						while(fileReader.hasNextLine()) {
+							int num = Integer.parseInt(fileReader.nextLine());
+							sum += num;
+							count++;
 							trav.next = new Node(Integer.parseInt(fileReader.nextLine()));
 							trav = trav.next;
 						}
@@ -99,15 +105,7 @@ public class FileReaderWindow {
 	 */
 	private int findMean(Node head) {
 		if(head == null) return 0;
-		int sum = 0; 
-		int count = 0;
-		Node trav = head;
-		while(trav != null) {
-			sum += trav.data;
-			count++;
-			trav = trav.next;
-		}
-		return sum / count;
+		return this.sum / this.count;
 	}
 	
 	/**
@@ -118,15 +116,12 @@ public class FileReaderWindow {
 	 */
 	private double findStandardDeviation(Node head, int mean) {
 		if(head == null) return 0;
-		double sum = 0;
-		int count = 0;
 		Node trav = head;
 		while(trav != null) {
 			sum += Math.pow(trav.data - mean, 2);
-			count ++;
 			trav = trav.next;
 		}
-		return Math.sqrt(sum / count);
+		return Math.sqrt(sum / this.count);
 	}
 
 	/**
